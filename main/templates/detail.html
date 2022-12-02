@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ people.name }} {{ people.family }}
+{% endblock title %}
+
+{% block style %}
+    body{
+        background-color: #404258;
+    }
+    .container{
+        direction: rtl;
+        background-color: #474E68;
+    }
+    
+{% endblock style %}
+{% block body %}
+    <div class="container overfloa-hidden p-3">
+        <div class="row text-center p-3">
+            <div class="col-md-6 p-3 bg-primary shadow rounded mx-auto ">
+                <h3 class="bg-warning shadow-sm rounded text-dark p-2">  {{ people.name }} {{ people.family }}</h3>
+
+                {% if people.field and people.university %}
+                    <div class="bg-light shadow-sm rounded p-2"> {{ people.field }} {{ people.university }} </div>
+                {% elif not people.field  and people.university %}
+                    <div class="bg-light shadow-sm rounded p-2">  {{ people.university }} 
+                        <div class="bg-light shadow-sm rounded p-2"> رشته ثبت نشده </div>
+                    </div>
+
+                {% elif people.field and not people.university %}
+                    <div class="bg-light shadow-sm rounded p-2">  {{ people.field}} 
+                        <div class="bg-danger shadow-sm rounded d-inline p-2 text-center text-light"> دانشگاه ثبت نشده  </div>
+                    </div>
+                {% else %}
+                    <div class="bg-danger text-light shadow-sm rounded p-2"> رشته و دانشگاه ثبت نشده </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row p-3 g-4">
+            <div class="col-md-6 p-3 rounded-5 position-relative bg-dark">
+                    <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
+                         مالی
+                    </span>
+                    <span class="position-absolute top-0 end-50 translate-middle badge rounded-pill bg-info fs-6 text-dark"> 
+                       {{ people.money }} 
+                    </span>
+                    
+                <div class="row p-3 text-center ">
+
+                    <div class="col">
+                        {% if people.debt_payment1 %}
+                            <a class="btn btn-warning position-relative m-3" href="/media/{{ people.debt_payment1 }}"> پرداخت 1 </a>
+                        {% else %}
+                            <div class="text-wrap  text-light bg-danger rounded shadow-sm p-2"> قسط اول ثبت نشده </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="col">
+                        {% if people.debt_payment2 %}
+                                <a class="position-relative btn btn-warning m-3" href="/media/{{ people.debt_payment2 }}">پرداخت 2 </a>
+                            {% else %}
+                                <div class="text-wrap  text-light bg-danger rounded shadow-sm p-2"> قسط دوم ثبت نشده </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col">
+                        {% if people.debt_payment3 %}
+                                <a class="btn btn-warning position-relative m-3" href="/media/{{ people.debt_payment3 }}"> پرداخت 3 </a>
+                            {% else %}
+                                <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> قسط سوم ثبت نشده </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 p-3 rounded-5 position-relative bg-dark shadow">
+                    <span class="position-absolute ps-4 top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
+                        پایان نامه
+                    </span>
+                    {% if people.title %}
+                        <span class="position-absolute ms-5 top-0 end-50 translate-middle badge rounded-pill bg-info fs-6 text-dark"> 
+                            {{ people.title }}
+                        </span>
+                    {% else %}
+                        <span class="position-absolute ms-5 top-0 end-50 translate-middle badge rounded-pill bg-danger fs-6 text-light"> 
+                            عنوان ثبت نشده
+                        </span>
+                    {% endif %}
+                    <div class="row p-3 text-center">
+                        <div class="col">
+                            {% if people.proposal %}
+                                    <a class="btn btn-warning m-3" href="/media/{{ people.proposal }}"> پروپزال </a>
+                                {% else %}
+                                    <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> پروپزال ثبت نشده </div>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if people.ch123 %}
+                                    <a class="btn btn-warning m-3" href="/media/{{ people.ch123 }}"> فصل 1 تا 3 </a>
+                                {% else %}
+                                    <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> فصل 1 تا 3 ثبت نشده </div>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if people.ch45 %}
+                            
+                                    <a class="btn btn-warning m-3" href="/media/{{ people.ch45}}"> فصل 4 و 5 </a>
+                                {% else %}
+                                    <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> فصل 4 و 5 ثبت نشده </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 p-3 rounded-5 mx-auto position-relative bg-dark shadow">
+                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
+                            اساتید
+                        </span>
+                        <div class="row p-3 text-center g-2">
+                            <div class="col p-2">
+                                {% if people.doctor_adviser %}
+                                        <div class="text-wrap position-relative bg-warning rounded text-dark rounded shadow-sm p-2"> {{ people.doctor_adviser }} 
+                                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
+                                               استاد راهنما 
+                                            </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> استاد راهنمایی ثبت نشده </div>
+                                {% endif %}
+                            </div>
+                            <div class="col p-2">
+                                {% if people.RAC %}
+                                        <div class="text-wrap position-relative bg-warning rounded text-dark rounded shadow-sm p-2"> {{ people.RAC }} 
+                                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
+                                               کد رهگیری پژوهشیار 
+                                            </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> کد رهگیری پژوهشیار ثبت نشده </div>
+                                {% endif %}
+                            </div>
+                            {% comment %} <div class="col">
+                                {% if people.title %}
+                                        <div class="text-wrap bg-warning position-relative rounded text-dark rounded shadow-sm p-2"> {{ people.title }} 
+                                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
+                                                عنوان 
+                                            </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> عنوان ثبت نشده </div>
+                                {% endif %}
+                            </div> {% endcomment %}
+                            <div class="col p-2">
+                                {% if people.representative %}
+                                        <div class="text-wrap bg-warning position-relative rounded text-dark rounded shadow-sm p-2"> {{ people.representative }}
+                                            <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
+                                               معرف
+                                            </span>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-wrap bg-danger rounded text-light rounded shadow-sm p-2"> معرف ثبت نشده </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="p-3">
+                <a href="/" class="btn btn-primary "><i class="bx bx-arrow-back bx-sm"></i></a>
+            </div>  
+    </div>
+
+
+
+
+{% endblock body %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+    خانه
+{% endblock title %}
+{% block style %}
+        body{
+            background-color: gray;
+        }
+        .container{
+            background-color: #9e9a90;
+        }
+
+        .list-group-item {
+            direction: rtl;
+        }
+
+        h3{
+           color: black;
+        }    
+
+        .list-group{
+            max-height: 20rem;
+        }
+{% endblock style%}
+ 
+{% block body %}
+    <div class="container content-row px-3">
+        <div class="row ">
+            <div class="col-md-12 col-lg-6">
+                <h3 class="text-center"> اسامی </h3>
+                <div class="card overflow-auto ">
+                    <ol class="list-group list-group-numbered">
+                            {% for main in main_objects %}
+                                <a href="{{main.get_absolute_url}}" class="text-decoration-none list-group-item list-group-item-action"> {{ main.name }} {{ main.family }} </a>
+                            {% endfor %}
+
+                    </ol>
+                </div>
+                    <div class="text-center p-2"> 
+                        <a class="btn btn-primary text-center" href="add-people/" role="button"><i class="bx bx-plus bx-sm"></i></a> 
+                    </div>
+
+                
+            </div>
+            <div class="col-md-12 col-lg-6 p-3">
+			<h3 class="text-center"> کارها </h3> 
+                <div class="card  overflow-auto">
+                        <ol class="list-group list-group-numbered">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% for todo in todo_objects %}
+                                    {% if todo.status == "necessary" %}
+                                        <button type="button" class="list-group-item list-group-item-danger list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ todo.status }}"id="checkboxlabel">
+                                        </button>
+                                    {% elif todo.status == "today" %}
+                                        <button type="button" class="list-group-item list-group-item-secondary list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
+                                        </button>
+                                    {% else %}
+                                        <button type="button" class="list-group-item list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
+                                        </button>
+                                    {% endif %}
+                                {% endfor %}
+                            </form>
+                        </ol>
+                </div>
+                        <div class="text-center p-2"> 
+                            <a class="btn btn-primary text-center" href="add-todo/" role="button"><i class="bx bx-plus bx-sm"></i></a> 
+                            <a class="btn btn-primary text-center" href="todos-page/" role="button"><i class="bx bx-expand bx-sm"></i></a> 
+                        </div>
+                    
+            </div>
+        </div>
+    </div>
+{% endblock body %}       

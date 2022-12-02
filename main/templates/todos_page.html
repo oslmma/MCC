@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock head %}
+
+{% block style %}
+
+    .row-bg-color{
+        background-color: #DEF5E5;
+    }
+
+    .list-group-item {
+        direction: rtl;
+    }
+
+    .list-group{
+        max-height: 10rem;
+    }
+
+{% endblock style %}
+
+{% block body %}
+    <div class="container content-row px-3">
+        <div class="row p-3 row-bg-color">
+            <div class="col-md-4 p-3">
+                <h3 class="text-center"> ضروری </h3>
+                <div class="card  overflow-auto">
+                    <ol class="list-group text-bg-primary list-group-numbered" >
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for necessary in necessaries %}
+                                <button type="button" class="list-group-item  list-group-item-action"> {{ necessary }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ necessary }}" id="checkboxlabel">
+                                </button>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-4 p-3">
+                <h3 class="text-center"> امروز </h3>
+                <div class="card overflow-auto">
+                    <ol class="list-group list-group-numbered">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for today in todaies %}
+                                <button type="button" class="list-group-item  list-group-item-action  "> {{ today }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ today }}"id="checkboxlabel">
+                                </button>
+                            {% endfor %}
+                        </form>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-md-4 p-3">
+                <h3 class="text-center"> یادآوری </h3>
+                <div class="card overflow-auto">
+                    <ol class="list-group list-group-numbered">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% for remind in reminds %}
+                                <button type="button" class="list-group-item list-group-item-action"> {{ remind }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
+                                </button>
+                            {% endfor %}
+                        </form>
+                    </ol>
+                </div>
+            </div>
+                        <div class="text-center p-2"> 
+                            <a class="btn btn-primary text-center" href="/add-todo/" role="button"><i class="bx bx-plus bx-sm"></i></a> 
+                            <a class="btn btn-primary text-center" href="/" role="button"><i class="bx bx-arrow-back bx-sm"></i></a> 
+                        </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('.likebutton').click(function(){
+            var catid;
+            catid = $(this).attr("data-catid");
+            $.ajax(
+                {
+                    type:"GET",
+                    url: "/likepost",
+                    data:{
+                            post_id: catid
+                    },
+                    success: function( data ) 
+                    {
+                        $( '#like'+ catid ).remove();
+                        $( '#message' ).text(data);
+                    }
+                })
+        });
+</script>
+
+{% endblock body %}
