@@ -19,13 +19,13 @@ class Main(models.Model):
     debt_payment2 = models.FileField(upload_to=user_directory_path, blank=True)
     debt_payment3 = models.FileField(upload_to=user_directory_path, blank=True)
 
-    start_date = models.DateTimeField()
+    start_date = models.DateField()
 
     proposal = models.FileField(upload_to=user_directory_path, blank=True)
     ch123 = models.FileField(upload_to=user_directory_path, blank=True)
     ch45 = models.FileField(upload_to=user_directory_path, blank=True)
 
-    translation = models.CharField(max_length=64, blank=True)
+    translation = models.FileField(upload_to=user_directory_path, blank=True)
     # research assistant code 
     RAC = models.CharField(max_length=64, blank=True)
     representative = models.CharField(max_length=64, blank=True)

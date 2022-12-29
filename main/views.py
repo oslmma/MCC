@@ -9,6 +9,12 @@ from .forms import AddPeopleForm, AddTODOForm
 def home(request):
     main_objects = Main.objects.all()
     todo_objects = TODO.objects.all().order_by('status')
+    if request.method == "POST":
+        if todo_objects:
+            pk_todo = request.POST["todo"]
+            print(pk_todo)
+            query = TODO.objects.filter(pk=pk_todo).update(done=True)
+    #         print(query)
     return render(request, 'home.html', {'main_objects': main_objects, 'todo_objects': todo_objects})
 
 def detail(request, pk):
@@ -17,7 +23,10 @@ def detail(request, pk):
 
 def add_people(request):
     if request.method == "POST":
+
         form = AddPeopleForm(request.POST, request.FILES)
+        print(form)
+        print(form.is_valid())
         if form.is_valid():
             name = form.cleaned_data['name']
             family = form.cleaned_data['family']
@@ -26,16 +35,16 @@ def add_people(request):
             title  = form.cleaned_data['title']
             doctor_adviser = form.cleaned_data['doctor_adviser']
             money = form.cleaned_data['money']
-            debt_payment1 = form.cleaned_data['debt_payment1']
-            debt_payment2 = form.cleaned_data['debt_payment2']
-            debt_payment3= form.cleaned_data['debt_payment3']
+            debt_payment1 = request.FILES.get("debt_payment1")
+            debt_payment2 = request.FILES.get("debt_payment2")
+            debt_payment3 = request.FILES.get("debt_payment3")
             start_date = form.cleaned_data['start_date']
             if not start_date:
                 start_date = timezone.now()
             proposal = form.cleaned_data['proposal']
             ch123 = form.cleaned_data['ch123']
             ch45 = form.cleaned_data['ch45']
-            translation = form.cleaned_data['translation']
+            translation = request.FILES.get("translation")
             rac = form.cleaned_data['RAC']
             representative = form.cleaned_data['representative']
             description = form.cleaned_data['description']

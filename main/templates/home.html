@@ -9,6 +9,9 @@
         .container{
             background-color: #9e9a90;
         }
+        .trash-icon{
+            color: #be4d25;
+        }
 
         .list-group-item {
             direction: rtl;
@@ -46,21 +49,27 @@
 			<h3 class="text-center"> کارها </h3> 
                 <div class="card  overflow-auto">
                         <ol class="list-group list-group-numbered">
-                            <form method="post">
+                            <form method="post" id="todo-form">
                                 {% csrf_token %}
                                 {% for todo in todo_objects %}
-                                    {% if todo.status == "necessary" %}
-                                        <button type="button" class="list-group-item list-group-item-danger list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
-                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ todo.status }}"id="checkboxlabel">
-                                        </button>
-                                    {% elif todo.status == "today" %}
-                                        <button type="button" class="list-group-item list-group-item-secondary list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
-                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
-                                        </button>
-                                    {% else %}
-                                        <button type="button" class="list-group-item list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
-                                            <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
-                                        </button>
+                                    {% if todo.done == False %}
+                                        {% if todo.status == "necessary" %}
+                                            <button type="button" class="list-group-item list-group-item-danger list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }}"id="checkboxlabel">
+                                                <a class="float-start px-2 trash-icon"><i class="bx bxs-trash"></i></a>
+                                            </button>
+                                        {% elif todo.status == "today" %}
+                                            <button type="button" class="list-group-item list-group-item-secondary list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }}" id="checkboxlabel">
+                                                {% comment %} <label class="form-label float-start" for="delete-today"><i class="bx bxs-trash"></i></label> {% endcomment %}
+                                                <input class="form-check-input float-start bx bxs-trash form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }}" id="delete-today">
+                                            </button>
+                                        {% else %}
+                                            <button type="button" class="list-group-item list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }} " id="checkboxlabel">
+                                                <a class="float-start px-2 trash-icon"><i class="bx bxs-trash"></i></a>
+                                            </button>
+                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             </form>
@@ -74,4 +83,32 @@
             </div>
         </div>
     </div>
+    <script>
+        var x = document.getElementsByClassName("trash-icon");
+        {% comment %} for (var i = 0; i < x.length; i++){
+           // x[i].addEventListener("mouseover", function(){document.getElementsByClassName("bxs-trash")[i].classList.add("bx-tada")});
+            x[i].addEventListener("mouseover", function(){x[i].classList.add("bx-tada")});
+
+            x[i].addEventListener("mouseout", function(){x[i].classList.remove("bx-tada")});
+        } {% endcomment %}
+        const formDelete = document.getElementById("todo-form");
+        for (var i = 0; i < x.length; i++)
+            x[i].addEventListener("click", function(){
+                if (window.confirm("برای حذف مطمئن هستید؟")){
+                    form.submit();
+                }
+
+            });
+    </script>
+    <script> 
+        const y = document.getElementsByClassName("form-check-necessary");
+        const formDone = document.getElementById("todo-form");
+        for (var i = 0; i < y.length; i++)
+            y[i].addEventListener("click", function(){
+                form.submit();
+
+            });
+        </script>
+        
+
 {% endblock body %}       

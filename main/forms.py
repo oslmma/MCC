@@ -14,7 +14,7 @@ class AddPeopleForm(forms.Form):
     debt_payment2 = forms.FileField(max_length=126, label='قسط دوم', required=False)
     debt_payment3 = forms.FileField(max_length=126, label='قسط سوم', required=False)
 
-    start_date = forms.DateTimeField(label='شروع کار', required=False)
+    start_date = forms.DateField(label='شروع کار', required=False)
 
     proposal = forms.FileField(label='پروپوزال', required=False)
     ch123 = forms.FileField(label='فصل 1 تا 3', required=False)

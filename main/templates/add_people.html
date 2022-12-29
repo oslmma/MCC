@@ -4,18 +4,109 @@
 {% endblock title %}
 
 {% block style %}
+    .container{
+        direction: rtl;
+    }
 {% endblock style %}
 
 {% block body %}
     
-    <form method="POST">
-        {% csrf_token %}
-        <div class="p-3">
-            {{ form.as_p }}
+    <div class="container bg-light shadow-sm p-3 rounded">
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-8 mx-auto">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-name"> نام </lable>
+                            <input class="form-control" id="input-name" name="name" type="text" placeholder value required>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-family"> نام فامیلی </lable>
+                            <input class="form-control" id="input-family" name="family" type="text" placeholder value required>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-field"> رشته </lable>
+                            <input class="form-control m-1" id="input-field" name="field" type="text" placeholder value>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-university"> دانشگاه </lable>
+                            <input class="form-control m-1" id="input-university" name="university" type="text" placeholder value>
+                        </div>
+                        <div class="col-12"> 
+                            <lable class="form-lable p-3" for="input-doctor-adviser"> استاد راهنما </lable>
+                            <input class="form-control m-1" id="input-doctor-adviser" name="doctor_adviser" type="text" placeholder value>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-title"> عنوان </lable>
+                            <input class="form-control m-1" id="input-title" name="title" type="text" placeholder value>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-money"> پول قرارداد </lable>
+                            <input class="form-control m-2" id="input-money" name="money" type="text" placeholder value>
+                        </div>
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-debt_peyment1"> قسط 1 </lable>
+                            <input class="form-control m-1" id="input-debt_peyment1" name="debt_payment1" type="file" placeholder value>
+                        </div>
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-debt_peyment2"> قسط 2 </lable>
+                            <input class="form-control m-1" id="input-debt_peyment2" name="debt_payment2" type="file" placeholder value>
+                        </div>
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-debt_peyment3"> قسط 3 </lable>
+                            <input class="form-control m-2" id="input-debt_peyment3" name="debt_payment3" type="file" placeholder value>
+                        </div>
+
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-start-date"> تاریخ شروع کار </lable>
+                            <input class="form-control m-2" id="input-start-date" name="start_date" type="datetime-local">
+                        </div>
+
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-translation"> ترجمه </lable>
+                            <input class="form-control m-2" id="input-translation" name="translation" type="file" placeholder value>
+                        </div>
+
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-proposal"> پروپوزال </lable>
+                            <input class="form-control m-1" id="input-proposal" name="proposal" type="file" placeholder value>
+                        </div>
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-ch123"> فصل 1 تا 3</lable>
+                            <input class="form-control m-1" id="input-ch123" name="ch123" type="file" placeholder value>
+                        </div>
+                        <div class="col-md-4"> 
+                            <lable class="form-lable p-3" for="input-ch45"> فصل 4 و 5</lable>
+                            <input class="form-control m-2" id="input-ch45" name="ch45" type="file" placeholder value>
+                        </div>
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-rac"> کد رهگیری پژوهشیار </lable>
+                            <input class="form-control m-2" id="input-rac" name="RAC" type="text">
+                        </div>
+
+                        <div class="col-sm-6"> 
+                            <lable class="form-lable p-3" for="input-representative"> معرف </lable>
+                            <input class="form-control m-2" id="input-representative" name="representative" type="text" placeholder value>
+                        </div>
+
+                        <div class="col-12">
+                            <lable class="form-lable p-3" for="input-description"> توضیحات </lable>
+                            <textarea class="form-control m-2" id="input-description" name="description" row=3> </textarea>
+                        </div>
+
+                        <div class="col-12 d-grid p-2">
+                            <input type="submit" class="btn m-2 btn-primary">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+    {% comment %} <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
         <input type="submit" value="submit">
-    </form>
-
-
-
+    </form> {% endcomment %}
 {% endblock body %}
