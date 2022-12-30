@@ -8,13 +8,17 @@ from .forms import AddPeopleForm, AddTODOForm
 
 def home(request):
     main_objects = Main.objects.all()
-    todo_objects = TODO.objects.all().order_by('status')
     if request.method == "POST":
-        if todo_objects:
-            pk_todo = request.POST["todo"]
-            print(pk_todo)
-            query = TODO.objects.filter(pk=pk_todo).update(done=True)
-    #         print(query)
+        if request.POST.get("todo", None):
+            pk_todo = request.POST.get("todo", '')
+            TODO.objects.filter(pk=pk_todo).update(done=True)
+        if request.POST.get("delete", None):
+           pk_delete = request.POST.get("delete", None)
+           TODO.objects.get(pk=pk_delete).delete()
+
+
+    todo_objects = TODO.objects.filter(done=False).order_by('status')
+            
     return render(request, 'home.html', {'main_objects': main_objects, 'todo_objects': todo_objects})
 
 def detail(request, pk):
@@ -77,13 +81,10 @@ def add_people(request):
 def add_todo(request):
     if request.method == 'POST':
         form = AddTODOForm(request.POST)
-        print('before is valid')
 
         if form.is_valid():
             title = form.cleaned_data['title']
             status = form.cleaned_data['status']
-            print(status)
-            print(title)
             if status == 'zremind':
                 remind_datetime = form.cleaned_data['remind_datetime']
             else:
