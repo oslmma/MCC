@@ -16,8 +16,6 @@
         .trash-icon{
             color: #be4d25;
             cursor: pointer;
-            width= 1rem;
-            height: 1rem;
         }
 
         .list-group-item {
@@ -63,18 +61,18 @@
                                             {% comment %} <button type="button" class="list-group-item list-group-item-danger list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} {% endcomment %}
                                             <div  class="list-group-item list-group-item-danger list-group-item-action"> {{ forloop.counter }}.{{ todo.title }}
 
-                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{todo.pk}}" id="checkboxlabel">
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-answer" type="checkbox" name="todo" value="{{todo.pk}}" id="checkboxlabel">
                                                 <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon float-start" name="delete" value="{{ todo.pk }}"></button>
                                             </div>
                                         {% elif todo.status == "today" %}
                                             <div class="list-group-item list-group-item-secondary list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
-                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }}" id="checkboxlabel">
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-answer" type="checkbox" name="todo" value="{{ todo.pk }}" id="checkboxlabel">
                                                 <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon float-start" name="delete" value="{{ todo.pk }}"></button>
                                                 
                                             </div>
                                         {% else %}
                                             <div class="list-group-item list-group-item-action"> {{ forloop.counter }}.{{ todo.title }} 
-                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-necessary" type="checkbox" name="todo" value="{{ todo.pk }} " id="checkboxlabel">
+                                                <input class="form-check-input float-start shadow-sm rounded bg-info form-check-answer" type="checkbox" name="todo" value="{{ todo.pk }} " id="checkboxlabel">
                                                 <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon float-start" name="delete" value="{{ todo.pk }}"></button>
                                             </div>
                                     {% endif %}
@@ -96,14 +94,17 @@
         for (var i = 0; i < x.length; i++){
             x[i].addEventListener("click", function(){
                 if (window.confirm("برای حذف مطمئن هستید؟"))
-                    form.submit();
+                    alert("in trash");
+                else
+                    alert("in else trash");
             });
         }
     </script>
     <script> 
-        const y = document.getElementsByClassName("form-check-necessary");
+        const y = document.getElementsByClassName("form-check-answer");
         for (var i = 0; i < y.length; i++)
             y[i].addEventListener("click", function(){
+                alert("submit form in wrong!");
                 form.submit();
 
             });

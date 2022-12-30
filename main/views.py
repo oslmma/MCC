@@ -8,6 +8,7 @@ from .forms import AddPeopleForm, AddTODOForm
 
 def home(request):
     main_objects = Main.objects.all()
+    print(request.POST)
     if request.method == "POST":
         if request.POST.get("todo", None):
             pk_todo = request.POST.get("todo", '')
@@ -102,6 +103,15 @@ def add_todo(request):
     return render(request, 'add_todo.html', {'form': form})
 
 def todos_page(request):
+    print(request.POST)
+    if request.method == "POST":
+        if request.POST.get("todo", None):
+            pk_todo = request.POST.get("todo", '')
+            TODO.objects.filter(pk=pk_todo).update(done=True)
+        if request.POST.get("delete", None):
+           pk_delete = request.POST.get("delete", None)
+           TODO.objects.get(pk=pk_delete).delete()
+           
     todaies = TODO.objects.filter(status='today', done=False)
     necessaries = TODO.objects.filter(status='necessary', done=False)
     reminds = TODO.objects.filter(status='zremind', done=False).order_by('remind_datetime')

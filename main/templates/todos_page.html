@@ -5,6 +5,16 @@
 
 {% block style %}
 
+    .trash-icon-button{
+        border: none;
+        background: none;
+    }
+
+    .trash-icon{
+        color: #be4d25;
+        cursor: pointer;
+    }
+
     .row-bg-color{
         background-color: #DEF5E5;
     }
@@ -26,13 +36,15 @@
                 <h3 class="text-center"> ضروری </h3>
                 <div class="card  overflow-auto">
                     <ol class="list-group text-bg-primary list-group-numbered" >
-                        <form method="POST">
+                        <form method="POST" id="necessary-form">
                             {% csrf_token %}
                             {% for necessary in necessaries %}
-                                <button type="button" class="list-group-item  list-group-item-action"> {{ necessary }} 
-                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ necessary }}" id="checkboxlabel">
-                                </button>
+                                <div class="list-group-item  list-group-item-action">{{ forloop.counter }}.{{ necessary }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info checkbox-nec" type="checkbox" name="todo" value="{{ necessary.pk }}">
+                                    <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon trash-icon-nec float-start" name="delete" value="{{ necessary.pk }}"></button>
+                                </div>
                         {% endfor %}
+                            </form>
                     </ol>
                 </div>
             </div>
@@ -40,12 +52,13 @@
                 <h3 class="text-center"> امروز </h3>
                 <div class="card overflow-auto">
                     <ol class="list-group list-group-numbered">
-                        <form method="POST">
+                        <form method="POST" id="today-form">
                             {% csrf_token %}
                             {% for today in todaies %}
-                                <button type="button" class="list-group-item  list-group-item-action  "> {{ today }} 
-                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" value="{{ today }}"id="checkboxlabel">
-                                </button>
+                                <div class="list-group-item  list-group-item-action  "> {{ forloop.counter }}.{{ today }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info checkbox-today" type="checkbox" name="todo" value="{{ today.pk }}">
+                                    <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon trash-icon-today float-start" name="delete" value="{{ today.pk }}"></button>
+                                </div>
                             {% endfor %}
                         </form>
                     </ol>
@@ -55,12 +68,13 @@
                 <h3 class="text-center"> یادآوری </h3>
                 <div class="card overflow-auto">
                     <ol class="list-group list-group-numbered">
-                        <form method="POST">
+                        <form method="POST" id="remind-form">
                             {% csrf_token %}
                             {% for remind in reminds %}
-                                <button type="button" class="list-group-item list-group-item-action"> {{ remind }} 
-                                    <input class="form-check-input float-start shadow-sm rounded bg-info" type="checkbox" name="done" id="checkboxlabel">
-                                </button>
+                                <div class="list-group-item list-group-item-action">{{ forloop.counter }}.{{ remind }} 
+                                    <input class="form-check-input float-start shadow-sm rounded bg-info checkbox-remind" type="checkbox" name="todo" value="{{remind.pk}}">
+                                    <button class="px-2 py-1 bx bxs-trash bx-tada-hover trash-icon-button trash-icon trash-icon-remind float-start" name="delete" value="{{ remind.pk }}"></button>
+                                </div>
                             {% endfor %}
                         </form>
                     </ol>
@@ -72,25 +86,58 @@
                         </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $('.likebutton').click(function(){
-            var catid;
-            catid = $(this).attr("data-catid");
-            $.ajax(
-                {
-                    type:"GET",
-                    url: "/likepost",
-                    data:{
-                            post_id: catid
-                    },
-                    success: function( data ) 
-                    {
-                        $( '#like'+ catid ).remove();
-                        $( '#message' ).text(data);
-                    }
-                })
-        });
-</script>
+    <script>
+        const formNec = document.getElementById("necessary-form");
+        const formTod = document.getElementById("today-form");
+        const formRemind = document.getElementById("remind-form");
+        const trashNec = document.getElementsByClassName("trash-icon-nec");
+        const trashToday = document.getElementsByClassName("trash-icon-today");
+        const trashRemind = document.getElementsByClassName("trash-icon-remind");
+        const checkboxNec = document.getElementsByClassName("checkbox-nec");
+        const checkboxToday = document.getElementsByClassName("checkbox-today");
+        const checkboxRemind = document.getElementsByClassName("checkbox-remind");
+    </script>
+    <script>
+        for (var i = 0; i < trashNec.length; i++){
+            trashNec[i].addEventListener("click", function(){
+                if (window.confirm("برای حذف مطمئن هستید؟")){formNec.submit();}
+            });
+        }
+    </script>
+    <script>
+        for (var i = 0; i < trashToday.length; i++){
+            trashToday[i].addEventListener("click", function(){
+                if (window.confirm("برای حذف مطمئن هستید؟")){formTod.submit();}
+            });
+        }
+    </script>
+    <script>
+        for (var i = 0; i < trashRemind.length; i++){
+            trashRemind[i].addEventListener("click", function(){
+                if (window.confirm("برای حذف مطمئن هستید؟")){formRemind.submit();}
+            });
+        }
+    </script>
+    <script> 
+        for (var i = 0; i < checkboxNec.length; i++)
+            checkboxNec[i].addEventListener("click", function(){
+                formNec.submit();
+
+            });
+        </script>
+    <script> 
+        for (var i = 0; i < checkboxToday.length; i++)
+            checkboxToday[i].addEventListener("click", function(){
+                formToday.submit();
+
+            });
+        </script>
+    <script> 
+        for (var i = 0; i < checkboxRemind.length; i++)
+            checkboxRemind[i].addEventListener("click", function(){
+                formRemind.submit();
+
+            });
+        </script>
 
 {% endblock body %}
