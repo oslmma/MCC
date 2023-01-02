@@ -19,8 +19,14 @@ def home(request):
 
 
     todo_objects = TODO.objects.filter(done=False).order_by('status')
+    job_dones = TODO.objects.filter(done=True).order_by('status')
+    context = {
+        'main_objects': main_objects,
+        'todo_objects': todo_objects,
+        'job_dones': job_dones,
+    }
             
-    return render(request, 'home.html', {'main_objects': main_objects, 'todo_objects': todo_objects})
+    return render(request, 'home.html', context=context)
 
 def detail(request, pk):
     people_detail = get_object_or_404(Main, pk=pk)
