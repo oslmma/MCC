@@ -29,10 +29,16 @@
         .list-group{
             max-height: 20rem;
         }
+        .telegram{
+            color: #229ED9;
+        }
+        .whatsapp{
+            color: #075e54;
+        }
 {% endblock style%}
  
 {% block body %}
-    <div class="container content-row px-3">
+    <div class="container content-row px-3 pt-3">
         <div class="row ">
             <div class="col-md-12 col-lg-6">
                 <h3 class="text-center"> اسامی </h3>
@@ -94,7 +100,7 @@
                                     <ol class="list-group list-group-numbered">
                                             {% for job  in job_dones %}
                                                     {% if job.status == "necessary" %}
-                                                        <div  class="list-group-item list-group-item-danger "> {{ job.title }} 
+                                                        <div  class="list-group-item list-group-item-danger "> {{ job.title }}
                                                         </div>
                                                     {% elif job.status == "today" %}
                                                         <div class="list-group-item list-group-item-secondary list-group-item-action"> {{ job.title }} 
@@ -113,6 +119,7 @@
 
 
             </div>
+
         </div>
     </div>
     <script>

@@ -1,14 +1,18 @@
+import os
+
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
 from .models import Main, TODO
-from .forms import AddPeopleForm, AddTODOForm
+from .forms import AddPeopleForm, AddTODOForm, Updata
 
+from .updatefile import update
 
 
 def home(request):
     main_objects = Main.objects.all()
-    print(request.POST)
     if request.method == "POST":
         if request.POST.get("todo", None):
             pk_todo = request.POST.get("todo", '')
@@ -29,6 +33,43 @@ def home(request):
     return render(request, 'home.html', context=context)
 
 def detail(request, pk):
+    if request.method == "POST":
+        form = Updata(request.POST, request.FILES)
+        if form.is_valid():
+            if len(request.POST) == 3:
+                if request.POST.get("field", None):
+                    field = request.POST.get("field", None)
+                    Main.objects.filter(pk=pk).update(field=field)
+                elif request.POST.get("university", None):
+                    university = request.POST.get("university", None)
+                    Main.objects.filter(pk=pk).update(university=university)
+                elif request.POST.get("doctor_adviser", None):
+                    doctor_adviser = request.POST.get("doctor_adviser", None)
+                    Main.objects.filter(pk=pk).update(doctor_adviser=doctor_adviser)
+                elif request.POST.get("title", None):
+                    title = request.POST.get("title", None)
+                    Main.objects.filter(pk=pk).update(title=title)
+                elif request.POST.get("rac", None):
+                    rac = request.POST.get("rac", None)
+                    Main.objects.filter(pk=pk).update(RAC=rac)
+                elif request.POST.get("representative", None):
+                    representative = request.POST.get("representative", None)
+                    Main.objects.filter(pk=pk).update(representative=representative)
+            if len(request.FILES) == 1:
+                query = Main.objects.get(pk=pk)
+                name, family = query.name, query.family
+                update(request.FILES.get("debt_payment1", None), name, family)
+                if request.FILES.get("debt_payment1", None):
+                    debt_payment1 = request.FILES.get("debt_payment1", None)
+                    Main.objects.filter(pk=pk)[0].debt_payment1 = debt_payment1
+            # debt_payment2 = request.FILES.get("debt_payment2", None)
+            # debt_payment3 = request.FILES.get("debt_payment3", None)
+            # proposal = request.FILES.get("proposal", None)
+            # ch123 = request.FILES.get("ch123", None)
+            # ch45 = request.FILES.get("ch45", None)
+
+
+            
     people_detail = get_object_or_404(Main, pk=pk)
     return render(request, 'detail.html', {'people': people_detail})
 
@@ -36,8 +77,6 @@ def add_people(request):
     if request.method == "POST":
 
         form = AddPeopleForm(request.POST, request.FILES)
-        print(form)
-        print(form.is_valid())
         if form.is_valid():
             name = form.cleaned_data['name']
             family = form.cleaned_data['family']
@@ -109,7 +148,6 @@ def add_todo(request):
     return render(request, 'add_todo.html', {'form': form})
 
 def todos_page(request):
-    print(request.POST)
     if request.method == "POST":
         if request.POST.get("todo", None):
             pk_todo = request.POST.get("todo", '')

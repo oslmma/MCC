@@ -31,3 +31,7 @@ class AddTODOForm(forms.Form):
     status = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     description = forms.CharField(widget=forms.Textarea, required=False)
     remind_datetime = forms.DateTimeField(required=False)
+
+class Updata(forms.Form):
+    text = forms.CharField(max_length=256, required=False)
+    file = forms.FileField(required=False)
