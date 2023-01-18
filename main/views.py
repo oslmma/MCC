@@ -1,7 +1,5 @@
 import os
 
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
@@ -20,7 +18,6 @@ def home(request):
         if request.POST.get("delete", None):
            pk_delete = request.POST.get("delete", None)
            TODO.objects.get(pk=pk_delete).delete()
-
 
     todo_objects = TODO.objects.filter(done=False).order_by('status')
     job_dones = TODO.objects.filter(done=True).order_by('status')
@@ -57,16 +54,26 @@ def detail(request, pk):
                     Main.objects.filter(pk=pk).update(representative=representative)
             if len(request.FILES) == 1:
                 query = Main.objects.get(pk=pk)
-                name, family = query.name, query.family
-                update(request.FILES.get("debt_payment1", None), name, family)
                 if request.FILES.get("debt_payment1", None):
-                    debt_payment1 = request.FILES.get("debt_payment1", None)
-                    Main.objects.filter(pk=pk)[0].debt_payment1 = debt_payment1
-            # debt_payment2 = request.FILES.get("debt_payment2", None)
-            # debt_payment3 = request.FILES.get("debt_payment3", None)
-            # proposal = request.FILES.get("proposal", None)
-            # ch123 = request.FILES.get("ch123", None)
-            # ch45 = request.FILES.get("ch45", None)
+                    # update(request.FILES.get("debt_payment1", None), name, family)
+                    query.debt_payment1 = request.FILES['debt_payment1']
+                    query.save()
+                elif request.FILES.get("debt_payment2", None):
+                    query.debt_payment1 = request.FILES['debt_payment2']
+                    query.save()
+                elif request.FILES.get("debt_payment3", None):
+                    query.debt_payment1 = request.FILES['debt_payment3']
+                    query.save()
+                elif request.FILES.get("proposal", None):
+                    query.debt_payment1 = request.FILES['proposal']
+                    query.save()
+                elif request.FILES.get("ch123", None):
+                    query.debt_payment1 = request.FILES['ch123']
+                    query.save()
+                elif request.FILES.get("ch45", None):
+                    query.debt_payment1 = request.FILES['ch45']
+                    query.save()
+
 
 
             
