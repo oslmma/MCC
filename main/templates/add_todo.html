@@ -11,6 +11,7 @@
 {% endblock style %}
 
 {% block body %}
+{% if user.is_superuser %}
    <form  method="POST">
         {% csrf_token %}
         <div class="container p-3"> 
@@ -65,4 +66,7 @@
         </div>
     </form>
 
+{% else %}
+    <h1> Your not register </h1>
+{% endif %}
 {% endblock body %}

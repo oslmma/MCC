@@ -10,6 +10,7 @@
 {% endblock style %}
 
 {% block body %}
+{% if user.is_superuser %}
     
     <div class="container bg-light shadow-sm p-3 rounded">
         <div class="row g-3">
@@ -109,4 +110,7 @@
         {{ form.as_p }}
         <input type="submit" value="submit">
     </form> {% endcomment %}
+{% else %}
+    <h1> Your not register </h1>
+{% endif %}
 {% endblock body %}

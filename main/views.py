@@ -1,12 +1,9 @@
-import os
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
 from .models import Main, TODO
 from .forms import AddPeopleForm, AddTODOForm, Updata
 
-from .updatefile import update
 
 
 def home(request):
@@ -15,9 +12,12 @@ def home(request):
         if request.POST.get("todo", None):
             pk_todo = request.POST.get("todo", '')
             TODO.objects.filter(pk=pk_todo).update(done=True)
-        if request.POST.get("delete", None):
+        elif request.POST.get("delete", None):
            pk_delete = request.POST.get("delete", None)
            TODO.objects.get(pk=pk_delete).delete()
+        elif request.POST.get("delete-main", None):
+           pk_delete = request.POST.get("delete-main", None)
+           Main.objects.get(pk=pk_delete).delete()
 
     todo_objects = TODO.objects.filter(done=False).order_by('status')
     job_dones = TODO.objects.filter(done=True).order_by('status')
@@ -59,23 +59,20 @@ def detail(request, pk):
                     query.debt_payment1 = request.FILES['debt_payment1']
                     query.save()
                 elif request.FILES.get("debt_payment2", None):
-                    query.debt_payment1 = request.FILES['debt_payment2']
+                    query.debt_payment2 = request.FILES['debt_payment2']
                     query.save()
                 elif request.FILES.get("debt_payment3", None):
-                    query.debt_payment1 = request.FILES['debt_payment3']
+                    query.debt_payment3 = request.FILES['debt_payment3']
                     query.save()
                 elif request.FILES.get("proposal", None):
-                    query.debt_payment1 = request.FILES['proposal']
+                    query.proposal = request.FILES['proposal']
                     query.save()
                 elif request.FILES.get("ch123", None):
-                    query.debt_payment1 = request.FILES['ch123']
+                    query.ch123 = request.FILES['ch123']
                     query.save()
                 elif request.FILES.get("ch45", None):
-                    query.debt_payment1 = request.FILES['ch45']
+                    query.ch45 = request.FILES['ch45']
                     query.save()
-
-
-
             
     people_detail = get_object_or_404(Main, pk=pk)
     return render(request, 'detail.html', {'people': people_detail})

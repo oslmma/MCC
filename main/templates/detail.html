@@ -18,6 +18,13 @@
         color: #11eeff;
     }
     
+    .telegram{
+        color: #2AABEE;
+    }
+
+    .whatsapp1{
+        color: #25d366;
+    }
 {% endblock style %}
 {% block body %}
     
@@ -32,7 +39,7 @@
                     <div class="bg-light rounded py-2 "> {{ people.field }} </div>
                 {% elif not people.field %}
                         <div class="bg-danger position-relative  text-light shadow-sm rounded p-2 text-center" id="field"> رشته ثبت نشده
-                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" type="button" id="edit-button-field" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" type="button" id="edit-button-field" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                         </div>
                 {% endif %}
 
@@ -40,7 +47,7 @@
                         <div class="bg-dark text-light rounded py-2 ">   {{ people.university }} </div> 
                 {% elif not people.university %}
                         <div class="bg-danger position-relative rounded  p-2 text-center text-light" id="university"> دانشگاه ثبت نشده  
-                            <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-50" id="edit-button-university" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                            <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-university" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                         </div>
                 {% endif %}
             </div>
@@ -51,18 +58,21 @@
                     <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
                          مالی
                     </span>
-                    <span class="position-absolute top-0 end-50 translate-middle badge rounded-pill bg-info fs-6 text-dark"> 
+                    <span class="position-absolute top-0 end-50 translate-middle me-2 badge rounded-pill bg-info fs-6 text-dark"> 
                        {{ people.money }} 
                     </span>
                     
                 <div class="row p-3 text-center ">
 
                     <div class="col">
+                        
                         {% if people.debt_payment1 %}
-                            <a class="btn btn-warning position-relative m-3" href="/media/{{ people.debt_payment1 }}"> پرداخت 1 </a>
+                            <a class="btn position-relative btn-warning position-relative m-3" href="/media/{{ people.debt_payment1 }}"> پرداخت 1 
+                                <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-first" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                            </a>
                         {% else %}
                             <div class="text-wrap position-relative text-light bg-danger rounded shadow-sm p-2"> قسط اول ثبت نشده 
-                                <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-50" id="edit-button-first" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-first" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                             </div>
                         {% endif %}
                     </div>
@@ -70,20 +80,24 @@
 
                     <div class="col">
                         {% if people.debt_payment2 %}
-                                <a class="position-relative btn btn-warning m-3" href="/media/{{ people.debt_payment2 }}">پرداخت 2 </a>
+                                <a class="position-relative btn btn-warning m-3" href="/media/{{ people.debt_payment2 }}">پرداخت 2 
+                                    <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-second" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                </a>
                             {% else %}
                                 <div class="text-wrap  position-relative text-light bg-danger rounded shadow-sm p-2"> قسط دوم ثبت نشده 
-                                    <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-50" id="edit-button-second" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                    <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-second" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                 </div>
                         {% endif %}
                     </div>
 
                     <div class="col">
                         {% if people.debt_payment3 %}
-                                <a class="btn btn-warning position-relative m-3" href="/media/{{ people.debt_payment3 }}"> پرداخت 3 </a>
+                                <a class="btn position-relative btn-warning position-relative m-3" href="/media/{{ people.debt_payment3 }}"> پرداخت 3 
+                                    <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-third" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                </a>
                             {% else %}
                                 <div class="text-wrap bg-danger position-relative rounded text-light rounded shadow-sm p-2"> قسط سوم ثبت نشده 
-                                    <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-third" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                    <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-third" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                 </div>
                         {% endif %}
                     </div>
@@ -97,41 +111,47 @@
                         پایان نامه
                     </span>
                     {% if people.title %}
-                        <span class="position-absolute ms-5 top-0 end-50 translate-middle badge rounded-pill bg-info fs-6 text-dark"> 
+                        <span class="position-absolute ms-5 top-0 px-2 mx-3 text-wrap end-50 translate-middle badge rounded-pill bg-info fs-6 text-dark"> 
                             {{ people.title }}
+                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-title" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                         </span>
                     {% else %}
-                        <span class="position-absolute ms-5 top-0 end-50 translate-middle badge rounded-pill bg-danger fs-6 text-light"> 
+                        <span class="position-absolute ms-5 top-0 end-50 translate-middle badge text-wrap rounded-pill bg-danger fs-6 text-light"> 
                             عنوان ثبت نشده
-                            <button class="bx bxs-edit bx-sm translate-middle position-absolute bottom-50" id="edit-button-title" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-title" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                         </span>
                     {% endif %}
                     <div class="row p-3 text-center">
                         <div class="col">
                             {% if people.proposal %}
-                                    <a class="btn btn-warning m-3" href="/media/{{ people.proposal }}"> پروپزال </a>
+                                    <a class="btn position-relative btn-warning m-3" href="/media/{{ people.proposal }}"> پروپزال 
+                                        <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-proposal" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                    </a>
                                 {% else %}
                                     <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> پروپزال ثبت نشده 
-                                        <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-proposal" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                        <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-proposal" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                     </div>
                             {% endif %}
                         </div>
                         <div class="col">
                             {% if people.ch123 %}
-                                    <a class="btn btn-warning m-3" href="/media/{{ people.ch123 }}"> فصل 1 تا 3 </a>
+                                    <a class="btn position-relative btn-warning m-3" href="/media/{{ people.ch123 }}"> فصل 1 تا 3 
+                                        <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-ott" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                    </a>
                                 {% else %}
                                     <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> فصل 1 تا 3 ثبت نشده 
-                                        <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-ott" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                        <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-ott" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                     </div>
                             {% endif %}
                         </div>
                         <div class="col">
                             {% if people.ch45 %}
-                            
-                                    <a class="btn btn-warning m-3" href="/media/{{ people.ch45}}"> فصل 4 و 5 </a>
+                                    <a class="btn btn-warning m-3 position-relative" href="/media/{{ people.ch45}}"> فصل 4 و 5 
+                                        <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-ff" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                    </a>
                                 {% else %}
                                     <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> فصل 4 و 5 ثبت نشده 
-                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-ff" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-ff" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                             {% endif %}
                         </div>
@@ -139,8 +159,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6 p-3 rounded-5 mx-auto position-relative bg-dark shadow">
+            <div class="row mx-2 g-3">
+                <div class="col-md-6 p-3 rounded-5 position-relative bg-dark shadow">
                         <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
                             اساتید
                         </span>
@@ -151,11 +171,11 @@
                                             <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
                                                استاد راهنما 
                                             </span>
+                                            <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-doctor-adviser" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                                     {% else %}
                                         <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> استاد راهنمایی ثبت نشده
-                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute bottom-50" id="edit-button-doctor-adviser" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
-                                        </div>
+                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-doctor-adviser" data-bs-toggle="modal" data-bs-target="#mymodal"></button>                                        </div>
                                 {% endif %}
                             </div>
                             <div class="col p-2">
@@ -164,10 +184,11 @@
                                             <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
                                                کد رهگیری پژوهشیار 
                                             </span>
+                                                <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-rac" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                                     {% else %}
                                         <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> کد رهگیری پژوهشیار ثبت نشده 
-                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-rac" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0" id="edit-button-rac" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                                 {% endif %}
                             </div>
@@ -188,20 +209,38 @@
                                             <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary">
                                                معرف
                                             </span>
+                                                <button class="bx bxs-edit bx-sm  position-absolute translate-middle top-100 start-0" id="edit-button-representative" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                                     {% else %}
                                         <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> معرف ثبت نشده 
-                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-50" id="edit-button-representative" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                                            <button class="bx bxs-edit bx-sm translate-middle position-absolute top-100 start-0 " id="edit-button-representative" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
                                         </div>
                                 {% endif %}
                             </div>
+
                         </div>
                 </div>
-            </div>
+                <div class="col-md-6 p-3 rounded-5  position-relative  bg-dark shadow">
+                        <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-secondary fs-4 "> 
+                            توضیحات
+                        </span>
+                                {% if people.description %}
+                                        <div class="text-wrap text-light position-relative rounded shadow-sm p-2"> {{ people.description }}
+                                        </div>
+                                    {% else %}
+                                        <div class="text-wrap position-relative bg-danger rounded text-light rounded shadow-sm p-2"> توضیحات ثبت نشده 
+                                        </div>
+                                {% endif %}
+                            <button class="bx bxs-edit bx-sm position-absolute translate-middle top-100 start-0" id="edit-button-description" data-bs-toggle="modal" data-bs-target="#mymodal"></button>
+                </div>
+        </div>
+
 
             <div class="p-3">
-                <a href="/" class="btn btn-primary "><i class="bx bx-arrow-back bx-sm"></i></a>
-                <a class="btn text-center whatsapp float-start" role="button" action="share/whatsapp/share" href="whatsapp://send?text={{request.build_absolute_uri}}"><i class="bx bxl-whatsapp bx-sm" ></i></a>
+                {% if user.is_superuser %}
+                    <a href="/" class="btn btn-primary"><i class="bx bx-arrow-back bx-sm"></i></a>
+                {% endif %}
+                <a class="btn text-center whatsapp1 float-start" role="button" action="share/whatsapp/share" href="whatsapp://send?text={{request.build_absolute_uri}}"><i class="bx bxl-whatsapp bx-sm" ></i></a>
                 <a class="btn text-center telegram float-start" role="button"  href="tg://msg?text={{request.build_absolute_uri}}"><i class='bx bxl-telegram' ></i></a>
             </div>
     </div>

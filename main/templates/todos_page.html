@@ -30,6 +30,7 @@
 {% endblock style %}
 
 {% block body %}
+{% if user.is_superuser %}
     <div class="container content-row px-3">
         <div class="row p-3 row-bg-color">
             <div class="col-md-4 p-3">
@@ -139,5 +140,7 @@
 
             });
         </script>
-
+{% else %}
+        <h1> Your not register </h1>
+{% endif %}
 {% endblock body %}
